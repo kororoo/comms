@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kororoo Commissions</title>
+<link rel="icon" href="assets/icon-kororoo.png">
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Baloo+2:wght@500;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#2B1B24;
+    --paper:#FFFBF7;
+    --paper-soft:#FFF3E9;
+    --pink:#E0368F;
+    --pink-deep:#B81F6E;
+    --orange:#F3A968;
+    --orange-soft:#FBD9B4;
+    --line:rgba(43,27,36,0.12);
+    --max:1080px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Quicksand',sans-serif;
+    font-size:17px;
+    line-height:1.6;
+  }
+
+  /* halftone texture, echoes the dotted background in the Kororoo logo */
+  .dots{
+    background-image:radial-gradient(var(--pink) 1.1px, transparent 1.1px);
+    background-size:14px 14px;
+    opacity:0.08;
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+  }
+
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 28px; position:relative;}
+
+  h1,h2,h3{font-family:'Baloo 2',sans-serif; margin:0; line-height:1.15;}
+  .brand-font{font-family:'Silkscreen',monospace; letter-spacing:0.02em;}
+
+  a{color:inherit;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:20;
+    background:rgba(255,251,247,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px; max-width:var(--max); margin:0 auto;
+  }
+  .brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
+  .brand img{width:38px; height:38px; object-fit:contain;}
+  .brand span{font-size:1.05rem; font-family:'Silkscreen',monospace; color:var(--pink-deep);}
+  nav ul{list-style:none; display:flex; gap:26px; margin:0; padding:0;}
+  nav a{text-decoration:none; font-weight:600; font-size:0.95rem; color:var(--ink); opacity:0.8; transition:opacity 0.15s, color 0.15s;}
+  nav a:hover{opacity:1; color:var(--pink-deep);}
+  .nav-cta{
+    background:var(--pink); color:#fff !important; padding:9px 18px; border-radius:999px;
+    font-weight:700; font-size:0.9rem; text-decoration:none; opacity:1 !important;
+    box-shadow:0 3px 0 var(--pink-deep);
+  }
+  .menu-toggle{display:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative; overflow:hidden; padding:64px 0 40px;}
+  .hero-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:center;
+  }
+  .eyebrow{
+    font-family:'Silkscreen',monospace; font-size:0.72rem; color:var(--pink-deep);
+    text-transform:lowercase; letter-spacing:0.04em;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem, 5vw, 3.6rem); margin-top:10px; color:var(--ink);
+  }
+  .hero h1 em{
+    font-style:normal; color:var(--pink);
+  }
+  .hero p.lede{
+    margin-top:18px; max-width:46ch; font-size:1.08rem; color:rgba(43,27,36,0.78);
+  }
+  .hero-ctas{display:flex; gap:14px; margin-top:28px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 24px; border-radius:999px; font-weight:700; text-decoration:none;
+    font-size:0.98rem; border:2px solid var(--ink); transition:transform 0.12s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-solid{background:var(--pink); color:#fff; border-color:var(--pink-deep); box-shadow:0 4px 0 var(--pink-deep);}
+  .btn-outline{background:transparent; color:var(--ink); box-shadow:0 4px 0 var(--ink);}
+
+  .hero-art{position:relative; display:flex; justify-content:center;}
+  .hero-art .frame{
+    position:relative; width:100%; max-width:360px;
+    border:3px solid var(--ink); border-radius:50% 50% 46% 54% / 54% 46% 54% 46%;
+    padding:18px; background:var(--paper-soft);
+    box-shadow:10px 12px 0 var(--orange-soft);
+  }
+  .hero-art img{width:100%; display:block; border-radius:50% 50% 46% 54% / 54% 46% 54% 46%;}
+
+  /* info strip */
+  .strip{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0;
+    border-top:2px dashed var(--line); border-bottom:2px dashed var(--line);
+    margin-top:56px;
+  }
+  .strip div{padding:22px 18px; text-align:center; border-left:2px dashed var(--line);}
+  .strip div:first-child{border-left:none;}
+  .strip strong{display:block; font-family:'Baloo 2',sans-serif; font-size:1.05rem; color:var(--pink-deep); margin-bottom:4px;}
+  .strip span{font-size:0.9rem; color:rgba(43,27,36,0.7);}
+
+  /* ---------- Section shell ---------- */
+  section{padding:76px 0;}
+  .section-head{max-width:56ch; margin-bottom:40px;}
+  .section-head h2{font-size:clamp(1.8rem,3.4vw,2.4rem);}
+  .section-head p{margin-top:10px; color:rgba(43,27,36,0.72);}
+
+  /* divider - organic squiggle instead of a straight rule */
+  .squiggle{display:block; width:100%; height:26px; margin:0 auto;}
+
+  /* ---------- Prices ---------- */
+  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .price-card{
+    background:var(--paper-soft); border:2px solid var(--ink); border-radius:22px;
+    padding:26px 24px; position:relative; overflow:hidden;
+  }
+  .price-card::after{
+    content:""; position:absolute; top:-30px; right:-30px; width:90px; height:90px;
+    background:var(--orange-soft); border-radius:50%; opacity:0.7; z-index:0;
+  }
+  .price-card > *{position:relative; z-index:1;}
+  .price-card h3{font-size:1.2rem; margin-bottom:6px;}
+  .price-card .amount{
+    font-family:'Silkscreen',monospace; font-size:2.1rem; color:var(--pink-deep); margin:10px 0 4px;
+  }
+  .price-card .nsfw{font-size:0.86rem; color:rgba(43,27,36,0.65); margin-bottom:14px;}
+  .price-card ul{margin:0; padding-left:18px; font-size:0.9rem; color:rgba(43,27,36,0.75);}
+  .price-card ul li{margin-bottom:4px;}
+
+  .price-notes{
+    margin-top:30px; background:var(--paper); border:2px dashed var(--line); border-radius:18px;
+    padding:20px 24px;
+  }
+  .price-notes h4{margin:0 0 10px; font-family:'Baloo 2',sans-serif; font-size:1.05rem; color:var(--pink-deep);}
+  .price-notes ul{margin:0; padding-left:20px; font-size:0.94rem;}
+  .price-notes li{margin-bottom:6px;}
+
+  /* ---------- TOS ---------- */
+  .tos-wrap{background:var(--ink); color:var(--paper); border-radius:28px; padding:48px 44px;}
+  .tos-wrap .section-head p{color:rgba(255,251,247,0.72);}
+  .tos-wrap .eyebrow{color:var(--orange);}
+  .tos-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:32px 40px; margin-top:10px;}
+  .tos-block h3{font-size:1.05rem; color:var(--orange); margin-bottom:10px;}
+  .tos-block ul{margin:0; padding-left:18px; font-size:0.92rem; color:rgba(255,251,247,0.85);}
+  .tos-block li{margin-bottom:7px;}
+  .agree{
+    margin-top:32px; padding-top:24px; border-top:1px solid rgba(255,251,247,0.18);
+    font-size:0.95rem; color:rgba(255,251,247,0.85);
+  }
+  .agree strong{color:#fff;}
+
+  /* ---------- Queue ---------- */
+  .queue{
+    display:grid; grid-template-columns:1fr auto; align-items:center; gap:28px;
+    background:var(--paper-soft); border:2px solid var(--ink); border-radius:24px; padding:34px 36px;
+  }
+  .queue h2{font-size:1.6rem;}
+  .queue p{margin-top:8px; color:rgba(43,27,36,0.72); max-width:44ch;}
+
+  /* ---------- Footer ---------- */
+  footer{border-top:2px dashed var(--line); padding:48px 0 30px;}
+  .footer-grid{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:28px;}
+  .footer-brand{display:flex; align-items:center; gap:10px;}
+  .footer-brand img{width:34px; height:34px;}
+  .footer-brand span{font-family:'Silkscreen',monospace; color:var(--pink-deep); font-size:0.95rem;}
+  .socials{display:flex; gap:16px; flex-wrap:wrap;}
+  .socials a{
+    text-decoration:none; font-weight:700; font-size:0.9rem; color:var(--ink);
+    border-bottom:2px solid var(--orange); padding-bottom:2px;
+  }
+  .fine{margin-top:34px; font-size:0.82rem; color:rgba(43,27,36,0.55);}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px){
+    nav ul{display:none;}
+    .hero-grid{grid-template-columns:1fr; text-align:center;}
+    .hero p.lede{margin-left:auto; margin-right:auto;}
+    .hero-ctas{justify-content:center;}
+    .hero-art{order:-1;}
+    .strip{grid-template-columns:1fr; }
+    .strip div{border-left:none; border-top:2px dashed var(--line);}
+    .strip div:first-child{border-top:none;}
+    .price-grid{grid-template-columns:1fr;}
+    .tos-grid{grid-template-columns:1fr;}
+    .tos-wrap{padding:36px 24px;}
+    .queue{grid-template-columns:1fr; text-align:center;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .btn{transition:none;}
+  }
+
+  :focus-visible{outline:3px solid var(--pink); outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="#top">
+      <img src="assets/icon-kororoo.png" alt="Kororoo icon">
+      <span>KOROROO</span>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#prices">Prices</a></li>
+        <li><a href="#rules">Rules</a></li>
+        <li><a href="#queue">Queue</a></li>
+        <li><a href="#links">Links</a></li>
+      </ul>
+    </nav>
+    <a class="nav-cta" href="#queue">Commission me</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="dots"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">18+ artist · digital illustration</p>
+        <h1>Welcome to <em>Kororoo's</em> little corner of commissions.</h1>
+        <p class="lede">This is where you check what I draw, how commissions work, what the queue looks like, and whether we're a good fit before you reach out.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-solid" href="#queue">View the queue</a>
+          <a class="btn btn-outline" href="#prices">See prices</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="frame">
+          <img src="assets/mascot-kororoo.jpg" alt="Kororoo mascot artwork">
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="strip">
+        <div><strong>18+ commissions</strong><span>NSFW work is for adult clients only. Be honest and respectful.</span></div>
+        <div><strong>Turnaround varies</strong><span>Most pieces move steadily through the queue — exact timing depends on current workload.</span></div>
+        <div><strong>Public queue</strong><span>Check the Trello board any time for a live status update.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICES -->
+  <section id="prices">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">rates</p>
+        <h2>Prices</h2>
+        <p>Base prices for fully rendered pieces. Sketches and flat colors cost less — see the notes below.</p>
+      </div>
+
+      <div class="price-grid">
+        <div class="price-card">
+          <h3>Bust</h3>
+          <div class="amount">$45</div>
+          <p class="nsfw">+$15 for an NSFW version</p>
+          <ul>
+            <li>Head &amp; shoulders</li>
+            <li>Simple background included</li>
+          </ul>
+        </div>
+        <div class="price-card">
+          <h3>Half body</h3>
+          <div class="amount">$65</div>
+          <p class="nsfw">+$20 for an NSFW version</p>
+          <ul>
+            <li>Waist up</li>
+            <li>Simple background included</li>
+          </ul>
+        </div>
+        <div class="price-card">
+          <h3>Full body</h3>
+          <div class="amount">$85</div>
+          <p class="nsfw">+$40 for an NSFW version</p>
+          <ul>
+            <li>Full character</li>
+            <li>Simple background included</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="price-notes">
+        <h4>Good to know</h4>
+        <ul>
+          <li>Extra character: +50% of the original price.</li>
+          <li>Sketch only: 50% off the listed price.</li>
+          <li>Flat colors: 25% off the listed price.</li>
+          <li>Simple backgrounds are free — complex backgrounds start at +$20. Message me to discuss details.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- RULES / TOS -->
+  <section id="rules">
+    <div class="wrap">
+      <div class="tos-wrap">
+        <div class="section-head">
+          <p class="eyebrow">please read before commissioning</p>
+          <h2>Terms of service</h2>
+          <p>These are placeholder terms — replace them with your own before publishing. Keep the ones that reflect how you actually work.</p>
+        </div>
+
+        <div class="tos-grid">
+          <div class="tos-block">
+            <h3>General</h3>
+            <ul>
+              <li>I may decline a commission if it isn't something I can take on.</li>
+              <li>You must be 18+ to commission NSFW work.</li>
+              <li>Workload and energy levels can affect turnaround time.</li>
+            </ul>
+          </div>
+          <div class="tos-block">
+            <h3>Payment</h3>
+            <ul>
+              <li>Payment is upfront unless we agree on something different first.</li>
+              <li>I accept [PayPal / Ko-fi / Stripe — edit this list].</li>
+              <li>Work begins once payment is received.</li>
+            </ul>
+          </div>
+          <div class="tos-block">
+            <h3>Revisions &amp; usage</h3>
+            <ul>
+              <li>Small fixes are welcome during the sketch phase.</li>
+              <li>Major changes are closed once coloring begins.</li>
+              <li>Commissions are for personal use unless commercial rights are discussed and paid for.</li>
+            </ul>
+          </div>
+          <div class="tos-block">
+            <h3>Communication</h3>
+            <ul>
+              <li>Clear, kind communication helps the piece come out better.</li>
+              <li>Harassment, rushing, or pressure may lead to cancellation without refund.</li>
+              <li>If life gets in the way, I'll do my best to keep you informed.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="agree">If these terms work for you, please say: <strong>"I have read and agree to your TOS."</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUEUE -->
+  <section id="queue">
+    <div class="wrap">
+      <div class="queue">
+        <div>
+          <h2>Check the queue</h2>
+          <p>See where commissions currently stand on the public Trello board before you message me.</p>
+        </div>
+        <a class="btn btn-solid" href="#" target="_blank" rel="noopener">View Trello queue</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="links">
+  <div class="wrap">
+    <div class="footer-grid">
+      <a class="footer-brand" href="#top">
+        <img src="assets/icon-kororoo.png" alt="Kororoo icon">
+        <span>KOROROO</span>
+      </a>
+      <div class="socials">
+        <a href="https://linktr.ee/kororoo" target="_blank" rel="noopener">Linktree</a>
+        <a href="#" target="_blank" rel="noopener">Twitter / X</a>
+        <a href="#" target="_blank" rel="noopener">Ko-fi</a>
+      </div>
+    </div>
+    <p class="fine">Kororoo Commissions · Update payment processors and links before publishing.</p>
+  </div>
+</footer>
+
+</body>
+</html>
